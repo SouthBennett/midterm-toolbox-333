@@ -1,5 +1,6 @@
 import java.util.Map;
 import java.util.Queue;
+import java.util.HashMap;
 
 public class Toolbox {
 
@@ -80,7 +81,20 @@ public class Toolbox {
     if (head == null) {
       throw new IllegalArgumentException("Head cannot be null.");
     }
-    return null; 
+
+    Map<Integer, Integer> freqMap = new HashMap<>();
+
+    SingleNode current = head;
+
+    while(current != null) {
+      if (freqMap.containsKey(current.data)) {
+        freqMap.put(current.data, freqMap.get(current.data) + 1);
+      } else {
+        freqMap.put(current.data, 1 );
+      }
+      current = current.next;  
+    }
+    return freqMap; 
   }
 
   /**
@@ -93,7 +107,12 @@ public class Toolbox {
     if (node == null) {
       throw new IllegalArgumentException("Node cannot be null.");
     }
-    
+    if (node.prev != null){
+      node.prev.next = node.next;
+    }
+    if (node.next != null) {
+      node.next.prev = node.prev;
+    }
   }
 
   /**
